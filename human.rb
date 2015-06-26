@@ -1,60 +1,86 @@
-class Politician
-  attr_accessor :name,:party
+class Human
+  attr_accessor :type, :name,:party
 
-  def initialize(name, party)
+  def initialize(type, name, party)
+    @type = type
+	  @name = name
+    @party = party
+		@vote = ""
+		@votes = 0
+		@candidate = false
+  end
+	def type
+		@type
+
+	end
+  def party
+    @party
+
+  end
+
+  def name
+    @name
+  end
+#method to check get who the human will vote for, if its a politician- it will vote for itself
+  def vote
+		if @type == "politician"
+			@vote = @name
+		else
+			@vote
+		end
+  end
+  def votes
+		@votes +=1
+  end
+#declares human as a candidate or not
+  def candidate?
+	  @candidate = true if @type == "politician"
+  end
+#updates human with new info
+  def update(name, party)
     @name = name
     @party = party
   end
 
-  def party
-    @party
-  end
+end
 
-  def name
-    @name
-  end
+class Peeps
+	def initialize
+		@list = []
+
+		@poli =[]
+		@voter = []
+		@repub_prob_list = []
+		@demo_prob_list = []
+	end
+
+	def make_list
+		ben = Human.new "voter", "ben", "neutral"
+		bob = Human.new "politician", "bob", "democrat"
+		greg = Human.new "voter", "greg", "socialist"
+		hope = Human.new "voter", "hope", "liberal"
+		mary = Human.new "politician", "mary", "republican"
+
+		@list = [ben,bob,greg,hope,mary]
+		@list.each do |x|
+			(x.type == "politician") ? @poli << x : @voter << x
+		end
+	end
+
+	def show_list
+		@list
+	end
 
 
+	def polis
+		@poli
+
+	end
+
+	def voters
+		@voter
+	end
 
 end
 
-class Person
-  attr_accessor :name,:politics
 
-  def initialize(name, politics)
-    @name = name
-    @politics = politics
-  end
-
-  def politics
-    @politics
-  end
-
-  def name
-    @name
-  end
-end
-
-
-
-# def first_question_type?
-#   puts "What would you like to create? Politician or Person"
-#   create_question = gets.chomp.downcase
-#   if create_question == "politician"
-#     puts "Name?"
-#     name = gets.chomp.downcase
-#     puts "Party? Democrat or Republican"
-#     party_answer = gets.chomp.downcase
-#     name = Politician.new name, party_answer
-#   else
-#     puts "Name?"
-#     name = gets.chomp.downcase
-#     puts "Politics? Liberal, Conservative, Tea Party, Socialist, or Neutral"
-#     politics_answer = gets.chomp.downcase
-#     name = Person.new name, politics_answer
-#   end
-# end
-
-# x =first_question_type?
-
-# p x.name
