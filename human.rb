@@ -22,11 +22,11 @@ class Human
     @name
   end
 #method to check get who the human will vote for, if its a politician- it will vote for itself
-  def vote
+  def vote(x)
 		if @type == "politician"
 			@vote = @name
 		else
-			@vote
+      @vote = x
 		end
   end
   def votes
@@ -56,10 +56,13 @@ class Peeps
 
 	def make_list
 		ben = Human.new "voter", "ben", "neutral"
-		bob = Human.new "politician", "bob", "democrat"
+    ben.vote("bob")
+    bob = Human.new "politician", "bob", "democrat"
 		greg = Human.new "voter", "greg", "socialist"
-		hope = Human.new "voter", "hope", "liberal"
-		mary = Human.new "politician", "mary", "republican"
+    greg.vote(bob)
+    hope = Human.new "voter", "hope", "liberal"
+    hope.vote("mary")
+    mary = Human.new "politician", "mary", "republican"
 
 		@list = [ben,bob,greg,hope,mary]
 		@list.each do |x|

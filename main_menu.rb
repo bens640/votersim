@@ -7,14 +7,9 @@ class MainMenu
 	  @first_question_answer = 0
     @human_counter = 0
     @first_question_answer_list = ["create", "list", "update"]
-    @end_loop_first = true
-    #@create_question = ""
+    #@end_loop_first = true
     @name = ""
-    @party_answer = ""
-    @politics_answer = ""
     @people_list = []
-    @first_question_type_loop_politician = true
-    @first_question_type_loop_person = true
     @first_question_type_list = ["politician", "person", "democrat", "republican", "liberal",
                                 "conservative", "tea party", "socialist", "neutral", "ben" ]
   end
@@ -23,26 +18,30 @@ class MainMenu
 		@game_state
 	end
   def showlist
-    @people_list.each { |x| puts "#{x.type.capitalize}, #{x.name.capitalize}, #{x.party.capitalize}" }
+    @people_list.each do |x|
+      puts "*#{x.type}, #{x.name}, #{x.party}"
+    end
   end
 
 	def politician_question
-		while @first_question_type_loop_politician
+    first_question_type_loop_politician = true
+    while first_question_type_loop_politician
 			puts "Party? Democrat or Republican"
-			@party_answer = gets.chomp.downcase
+      party_answer = gets.chomp.downcase
 			@name = Human.new "politician", @name, @party_answer
 			@people_list << @name
-			@first_question_type_loop_politician = false if @first_question_type_list.include? @party_answer
+      first_question_type_loop_politician = false if @first_question_type_list.include? party_answer
 		end
 	end
 
   def voter_question
-	  while @first_question_type_loop_person
+    first_question_type_loop_person = true
+    while first_question_type_loop_person
 		  puts "Politics? Liberal, Conservative, Tea Party, Socialist, or Neutral"
-		  @politics_answer = gets.chomp.downcase
-		  @name = Human.new "voter", @name, @politics_answer
+      politics_answer = gets.chomp.downcase
+      @name = Human.new "voter", @name, politics_answer
 		  @people_list << @name
-		  @first_question_type_loop_person = false if @first_question_type_list.include? @politics_answer
+      first_question_type_loop_person = false if @first_question_type_list.include? politics_answer
 	  end
   end
 
@@ -101,11 +100,10 @@ class MainMenu
 end
 
 
-
 # x = MainMenu.new
 # until x.gamestate == 1
 # x.first_question
-# 	end
+# end
 
 
 
