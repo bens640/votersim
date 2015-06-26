@@ -43,3 +43,4 @@ repub = {
 repub_prob = Pickup.new(repub)
 p repub_prob.pick(1)
 
+

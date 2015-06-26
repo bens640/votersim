@@ -1,10 +1,12 @@
 require "./human.rb"
-
+require "./simulation.rb"
 class MainMenu
 
   def initialize
     @game_state = 0
-	  @first_question_answer = 0
+    @candidate_counter_demo = 0
+    @candidate_counter_repub = 0
+	  @first_question_answer= 0
     @human_counter = 0
     @first_question_answer_list = ["create", "list", "update"]
     #@end_loop_first = true
@@ -28,10 +30,22 @@ class MainMenu
     while first_question_type_loop_politician
 			puts "Party? Democrat or Republican"
       party_answer = gets.chomp.downcase
-			@name = Human.new "politician", @name, @party_answer
+      if party_answer == "democrat" && @candidate_counter_demo == 0
+        @candidate_counter_demo += 1
+      @name = Human.new "politician", @name, @party_answer
 			@people_list << @name
-      first_question_type_loop_politician = false if @first_question_type_list.include? party_answer
-		end
+      elsif party_answer == "republican" && @candidate_counter_repub == 0
+        @candidate_counter_repub += 1
+        @name = Human.new "politician", @name, @party_answer
+        @people_list << @name
+      else
+        puts "You already have politician from that party"
+      end
+
+			first_question_type_loop_politician = false if @first_question_type_list.include? party_answer
+
+
+    end
 	end
 
   def voter_question
@@ -93,6 +107,13 @@ class MainMenu
 							get_update
 	          when "vote"
 		          @game_state = 1
+		          test = VoteSim.new
+		          test.visit
+
+		          test.check_votes
+		          test.stump
+		          test.stump2
+		          test.check_votes
          end
       # end
 		# end
@@ -100,10 +121,10 @@ class MainMenu
 end
 
 
-# x = MainMenu.new
-# until x.gamestate == 1
-# x.first_question
-# end
+x = MainMenu.new
+until x.gamestate == 1
+x.first_question
+end
 
 
 
