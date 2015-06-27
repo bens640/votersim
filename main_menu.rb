@@ -54,7 +54,8 @@ class MainMenu
 		  puts "Politics? Liberal, Conservative, Tea Party, Socialist, or Neutral"
       politics_answer = gets.chomp.downcase
       @name = Human.new "voter", @name, politics_answer
-		  @people_list << @name
+
+      @people_list << @name
       first_question_type_loop_person = false if @first_question_type_list.include? politics_answer
 	  end
   end
@@ -108,11 +109,10 @@ class MainMenu
 	          when "vote"
 		          @game_state = 1
 		          test = VoteSim.new
-		          test.visit
-
-		          test.check_votes
+              test.visit(@people_list)
+              test.check_votes
 		          test.stump
-		          test.stump2
+              test.stump
 		          test.check_votes
          end
       # end
