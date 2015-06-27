@@ -15,16 +15,23 @@ class MainMenu
     @first_question_type_list = ["politician", "person", "democrat", "republican", "liberal",
                                 "conservative", "tea party", "socialist", "neutral", "ben" ]
   end
+
+  def capitalize(text)
+	  text.split.map(&:capitalize).join(' ')
+  end
+
   #used to keep main menu looping until gamestate's number is changed
 	def gamestate
 		@game_state
 	end
   def showlist
     @people_list.each do |x|
-      puts "*#{x.type}, #{x.name}, #{x.party}"
+      puts "* #{capitalize(x.type)}, #{capitalize(x.name)}, #{capitalize(x.party)}"
     end
   end
-
+	def put_line
+		puts "*" * 100
+	end
 	def politician_question
     first_question_type_loop_politician = true
     while first_question_type_loop_politician
@@ -49,10 +56,11 @@ class MainMenu
 	end
 
   def prepopulate_list
-	  name_list = %w(ben bob mary jim steve jill veronica danny jon mario ed amy juan walter ed)
+	  name_list = ['ben shelomovitz', 'bob obobb', 'mary kate', 'kim possible', 'steve-o', 'jill and jack', 'veronica mars', 'danny trejo',
+	               'jon snow', 'mario anluigi', 'ed obannon', 'amy winehouse', 'juan jones', 'walter okiefe', 'fred love']
 	  party_list = ['tea party', 'conservative', 'neutral', 'liberal', 'socialist']
-	  jimbo = Human.new "politician", 'jimbo', 'democrat'
-	  gene = Human.new "politician", 'gene', 'republican'
+	  jimbo = Human.new "politician", 'jimbo jones', 'democrat'
+	  gene = Human.new "politician", 'gene wilder', 'republican'
 	  @people_list << jimbo
 	  @people_list << gene
 
@@ -90,6 +98,16 @@ class MainMenu
     end
   end
 
+  def delete
+	  puts "Name?"
+	  name = gets.chomp.downcase
+	  @people_list.each do |x|
+		  if x.name == name
+			  @people_list.delete_if {|person| person == x.name }
+		  end
+	  end
+  end
+
   def get_update
 	  puts "Name?"
     og_name = gets.chomp.downcase
@@ -112,28 +130,41 @@ class MainMenu
 
   def first_question
     # while @end_loop_first
-      puts"What would you like to do? Create, Prepopulate, List, Update, or Vote"
+      puts"What would you like to do? Create, Prepopulate, Delete, List, Update, or Vote"
       @first_question_answer = gets.chomp.downcase
       # if @first_question_answer_list.include? @first_question_answer
 	       case @first_question_answer
            when "create"
 		          first_question_type?
-           when "prepopulate"
-               prepopulate_list
+		       when "prepopulate"
+			       prepopulate_list
 		       when '1'
-						  prepopulate_list
+			       prepopulate_list
            when "list"
-							showlist
+	           showlist
            when "update"
-							get_update
+	           get_update
+		       when 'delete'
+						 delete
            when "vote"
 		          @game_state = 1
 		          game = VoteSim.new
 		          game.visit(@people_list)
+		          put_line
+		          puts "Democratic Stump Speeches"
+		          put_line
 		          game.stump
-              game.stump
+		          put_line
+		           puts "Republican Stump Speeches"
+		          put_line
+		          game.stump
+		          put_line
+		          puts "Tally up votes"
+		          put_line
 		          game.check_votes
 		          game.cast_votes
+		          put_line
+		          put_line
 						  game.show_results
          end
       # end
@@ -142,10 +173,7 @@ class MainMenu
 end
 
 
-x = MainMenu.new
-until x.gamestate == 1
-x.first_question
-end
+
 
 
 

@@ -91,17 +91,6 @@ class HumanList
 #class methods
 #--------------------------------------------------------------------------------------------------------
 	def make_list(user_list)
-		# ben = Human.new "voter", "ben", "tea party"
-		# # ben.will_vote?("democrat")
-		# bob = Human.new "politician", "bob", "democrat"
-		# bob.will_vote?("glenn")
-		# greg = Human.new "voter", "greg", "socialist"
-		# # greg.will_vote?("democrat")
-		# hope = Human.new "voter", "hope", "conservative"
-		# # hope.will_vote?("republican")
-		# mary = Human.new "politician", "mary", "republican"
-		# mary.will_vote?("glenn")
-
 		@list = user_list
 		@list.each do |x|
 			if x.type != "politician"
