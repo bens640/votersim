@@ -27,11 +27,6 @@ class VoteSim
 # Method to initialize the voters list
   def visit(user_list)
     @list = user_list
-    # @list.each do |x|
-    #   if x.type != "politician"
-    #     @voter << x
-    #   end
-    # end
   end
 
 #Method that runs the voters candidate choice through the probability that choice will be changed
@@ -55,7 +50,7 @@ class VoteSim
     end
   end
 
-
+#Method that uses case/when to run stump question for the voters political party
   def stump
 		tea_party_list = {"republican" =>90, "democrat" =>10}
 		conservative_list ={"republican" =>75, "democrat" =>25}
@@ -106,12 +101,8 @@ class VoteSim
         @d_winner = x.name.capitalize
       elsif x.party == "republican"
         @r_winner = x.name.capitalize
-
-
       end
     end
-
-
     if @democrat_votes > @republican_votes
       puts "With a total of #{@democrat_votes} votes, #{@d_winner} wins!"
 		elsif @republican_votes > @democrat_votes
@@ -121,21 +112,6 @@ class VoteSim
 	end
 
 
-  def usertestlist
-    ben = Human.new "voter", "ben", "tea party"
-    bob = Human.new "politician", "bob", "democrat"
-    greg = Human.new "voter", "greg", "socialist"
-    hope = Human.new "voter", "hope", "conservative"
-    mary = Human.new "politician", "mary", "republican"
-    cindy = Human.new "voter", "cindy", "neutral"
-    mindy = Human.new "voter", "mindy", "tea party"
-    larry = Human.new "voter", "larry", "liberal"
-    jerry = Human.new "voter", "jerry", "socialist"
-    gary = Human.new "voter", "gary", "liberal"
-    juan = Human.new "voter", "juan", "conservative"
-
-    @list = [ben, bob, greg, mary, hope, gary, mindy, cindy, larry, jerry, juan]
-  end
 
 
 #***********************************************************************************************************
@@ -143,15 +119,15 @@ end
 #END CLASS--------------------------------------------------------------------------------------------------
 
 
-test = VoteSim.new
-test.usertestlist
-# test.visit(@list)
-test.check_votes
-test.stump
-test.check_votes
-test.cast_votes
-test.show_results
-
+# test = VoteSim.new
+# test.usertestlist
+# # test.visit(@list)
+# test.check_votes
+# test.stump
+# test.check_votes
+# test.cast_votes
+# test.show_results
+#
 
 
 

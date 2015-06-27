@@ -8,7 +8,7 @@ class MainMenu
     @candidate_counter_repub = 0
 	  @first_question_answer= 0
     @human_counter = 0
-    @first_question_answer_list = ["create", "list", "update"]
+    @first_question_answer_list = ["create","prepopulate list", 1, "list", "update"]
     #@end_loop_first = true
     @name = ""
     @people_list = []
@@ -47,6 +47,22 @@ class MainMenu
 
     end
 	end
+
+  def prepopulate_list
+	  name_list = %w(ben bob mary jim steve jill veronica danny jon mario ed amy juan walter ed)
+	  party_list = ['tea party', 'conservative', 'neutral', 'liberal', 'socialist']
+	  jimbo = Human.new "politician", 'jimbo', 'democrat'
+	  gene = Human.new "politician", 'gene', 'republican'
+	  @people_list << jimbo
+	  @people_list << gene
+
+	  name_list.map do |name|
+		  random_party = party_list.sample
+		  name = Human.new "voter", name, random_party
+		  @people_list << name
+	  end
+
+  end
 
   def voter_question
     first_question_type_loop_person = true
@@ -96,24 +112,29 @@ class MainMenu
 
   def first_question
     # while @end_loop_first
-      puts"What would you like to do? Create, List, Update, or Vote"
+      puts"What would you like to do? Create, Prepopulate, List, Update, or Vote"
       @first_question_answer = gets.chomp.downcase
       # if @first_question_answer_list.include? @first_question_answer
 	       case @first_question_answer
-	          when "create"
+           when "create"
 		          first_question_type?
-            when "list"
+           when "prepopulate"
+               prepopulate_list
+		       when '1'
+						  prepopulate_list
+           when "list"
 							showlist
-            when "update"
+           when "update"
 							get_update
-	          when "vote"
+           when "vote"
 		          @game_state = 1
-		          test = VoteSim.new
-              test.visit(@people_list)
-              test.check_votes
-		          test.stump
-              test.stump
-		          test.check_votes
+		          game = VoteSim.new
+		          game.visit(@people_list)
+		          game.stump
+              game.stump
+		          game.check_votes
+		          game.cast_votes
+						  game.show_results
          end
       # end
 		# end
