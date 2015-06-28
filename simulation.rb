@@ -34,6 +34,15 @@ class VoteSim
     @list = user_list
   end
 
+  def stump_speech(party)
+    if party == "democrat"
+      puts "Please vote for me! I will do everything you ask and more. Dont listen to my opponent, he knows nothing!"
+    else
+      puts "As your republican candidate for president, I will take care of each and every one of you. What my rival forgets is that winter is coming!"
+    end
+
+  end
+
 #Method that runs the voters candidate choice through the probability that choice will be changed
   def stump_party_question(party_list, person)
     if person.type == "politician"
@@ -97,12 +106,7 @@ class VoteSim
 #Method for each voter to cast their vote for their candidate
 	def cast_votes
     @list.each do |x|
-      if x.voters_choice == "democrat"
-				@democrat_votes += 1
-			else
-				@republican_votes += 1
-
-			end
+	    (x.voters_choice == "democrat") ? @democrat_votes += 1 : @republican_votes += 1
 		end
 	end
 
@@ -125,33 +129,6 @@ class VoteSim
 			puts "As your new Republican President, I, #{@r_winner}, promise to uphold everything in the constitution as long as it doesn't interfere with my interests"
 	end
 
-  def stump_speech(party)
-    if party == "democrat"
-      puts "Please vote for me! I will do everything you ask and more. Dont listen to my opponent, he knows nothing!"
-    else
-      puts "As your republican candidate for president, i will take care of each and every one of you. What my rival forgets is that winter is coming!"
-    end
-
-  end
-
-
 #***********************************************************************************************************
 end
 #END CLASS--------------------------------------------------------------------------------------------------
-
-
-# test = VoteSim.new
-# test.usertestlist
-# # test.visit(@list)
-# test.check_votes
-# test.stump
-# test.check_votes
-# test.cast_votes
-# test.show_results
-#
-
-
-
-
-
-
