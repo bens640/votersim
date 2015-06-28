@@ -125,7 +125,14 @@ class VoteSim
 			puts "As your new Republican President, I, #{@r_winner}, promise to uphold everything in the constitution as long as it doesn't interfere with my interests"
 	end
 
+  def stump_speech(party)
+    if party == "democrat"
+      puts "Please vote for me! I will do everything you ask and more. Dont listen to my opponent, he knows nothing!"
+    else
+      puts "As your republican candidate for president, i will take care of each and every one of you. What my rival forgets is that winter is coming!"
+    end
 
+  end
 
 
 #***********************************************************************************************************

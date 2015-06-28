@@ -16,9 +16,19 @@ class MainMenu
                                 "conservative", "tea party", "socialist", "neutral", "ben" ]
   end
 
+#--------------------------------------------------------------------------------------------------------
+#methods for formatting output
+#--------------------------------------------------------------------------------------------------------
   def capitalize(text)
 	  text.split.map(&:capitalize).join(' ')
   end
+
+  def clear_screen
+    puts `clear`
+  end
+
+#--------------------------------------------------------------------------------------------------------
+
 
   #used to keep main menu looping until gamestate's number is changed
 	def gamestate
@@ -56,7 +66,7 @@ class MainMenu
 	end
 
   def prepopulate_list
-	  name_list = ['ben shelomovitz', 'bob obobb', 'mary kate', 'kim possible', 'steve-o', 'jill and jack', 'veronica mars', 'danny trejo',
+    name_list = ['ben', 'bob obobb', 'mary kate', 'kim possible', 'steve-o', 'jill and jack', 'veronica mars', 'danny trejo',
 	               'jon snow', 'mario anluigi', 'ed obannon', 'amy winehouse', 'juan jones', 'walter okiefe', 'fred love']
 	  party_list = ['tea party', 'conservative', 'neutral', 'liberal', 'socialist']
 	  jimbo = Human.new "politician", 'jimbo jones', 'democrat'
@@ -101,11 +111,7 @@ class MainMenu
   def delete
 	  puts "Name?"
 	  name = gets.chomp.downcase
-	  @people_list.each do |x|
-		  if x.name == name
-			  @people_list.delete_if {|person| person == x.name }
-		  end
-	  end
+    @people_list.delete_if { |person| person.name == name }
   end
 
   def get_update
@@ -129,46 +135,54 @@ class MainMenu
   end
 
   def first_question
-    # while @end_loop_first
-      puts"What would you like to do? Create, Prepopulate, Delete, List, Update, or Vote"
+    puts "What would you like to do? Create, Prepopulate, Delete, List, Update, or Vote"
       @first_question_answer = gets.chomp.downcase
-      # if @first_question_answer_list.include? @first_question_answer
-	       case @first_question_answer
-           when "create"
-		          first_question_type?
-		       when "prepopulate"
-			       prepopulate_list
-		       when '1'
-			       prepopulate_list
-           when "list"
-	           showlist
-           when "update"
-	           get_update
-		       when 'delete'
-						 delete
-           when "vote"
-		          @game_state = 1
-		          game = VoteSim.new
-		          game.visit(@people_list)
-		          put_line
-		          puts "Democratic Stump Speeches"
-		          put_line
-		          game.stump
-		          put_line
-		           puts "Republican Stump Speeches"
-		          put_line
-		          game.stump
-		          put_line
-		          puts "Tally up votes"
-		          put_line
-		          game.check_votes
-		          game.cast_votes
-		          put_line
-		          put_line
-						  game.show_results
-         end
-      # end
-		# end
+    case @first_question_answer
+      when "create"
+        first_question_type?
+      when "prepopulate"
+        prepopulate_list
+      when '1'
+        prepopulate_list
+      when "list"
+        showlist
+      when "update"
+        get_update
+      when 'delete'
+        delete
+      when "vote"
+        @game_state = 1
+        game = VoteSim.new
+        game.visit(@people_list)
+        put_line
+        puts "Democratic Stump Speech"
+        put_line
+        game.stump_speech("democrat")
+        sleep(3)
+        clear_screen
+        put_line
+        puts "Democratic Stump Speech"
+        put_line
+        game.stump
+        put_line
+        puts "Republican Stump Speech"
+        put_line
+        game.stump_speech("democrat")
+        sleep(3)
+        clear_screen
+        put_line
+        puts "Democratic Stump Speech"
+        put_line
+        game.stump
+        put_line
+        puts "Tally up votes"
+        put_line
+        game.check_votes
+        game.cast_votes
+        put_line
+        put_line
+        game.show_results
+    end
 	end
 end
 
